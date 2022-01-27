@@ -15,7 +15,7 @@ namespace ExcelMockTest.configure.configurer.simple
     public class SimpleConfigurerTest
     {
         [Test]
-        public void GIVEN_SimpleConfigurer_WHEN_MockSetupFooCallback_THEN_FooInvocationTriggersCallback()
+        public void GIVEN_SimpleConfigurer_WHEN_WithMockSetupFooCallback_THEN_FooInvocationTriggersCallback()
         {
             //Arrange
             IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();

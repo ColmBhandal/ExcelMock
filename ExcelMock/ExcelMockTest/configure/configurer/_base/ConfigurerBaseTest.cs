@@ -14,7 +14,7 @@ namespace ExcelMockTest.configure.configurer._base
     public class ConfigurerBaseTest
     {
         [Test]
-        public void GIVEN_OtherConfigurer_WHEN_OtherSetupFooCallback_THEN_FooInvocationTriggersCallback()
+        public void GIVEN_OtherConfigurer_WHEN_WithConfigSetupOtherFooCallback_THEN_FooInvocationTriggersCallback()
         {
             //Arrange
             OtherConfiguration configuration = new();

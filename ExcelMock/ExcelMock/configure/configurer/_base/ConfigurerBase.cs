@@ -1,4 +1,5 @@
-﻿using ExcelMock.configure.configuration;
+﻿using ExcelMock._base;
+using ExcelMock.configure.configuration;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace ExcelMock.configure.configurer._base
 {
-    internal abstract class ConfigurerBase<TObj, TConfig, TSelf> : IConfigurer<TObj, TConfig, TSelf>
+    internal abstract class ConfigurerBase<TObj, TConfig, TSelf> : BaseClass,
+        IConfigurer<TObj, TConfig, TSelf>
         where TSelf : IConfigurer<TObj, TConfig, TSelf>
         where TConfig : IConfiguration<TObj>
         where TObj : class

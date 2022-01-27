@@ -1,6 +1,7 @@
 ﻿using ExcelMock.configure.configuration;
 using ExcelMock.configure.configurer._base;
 using ExcelMock.configure.configurer.simple;
+using ExcelMock.configure.exception;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -35,6 +36,30 @@ namespace ExcelMockTest.configure.configurer.simple
             ITestObj obj = configurer.Object;
             obj.Foo();
             mockHandler.Verify(h => h.Handle(), Times.Once());
+        }
+
+        [Test]
+        public void GIVEN_SimpleConfigurer_WHEN_WithMockSetupAfterObjectAccess_THEN_ConfigurationException()
+        {
+            //Arrange
+            IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
+            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            ITestObj obj = configurer.Object;
+
+            //Act / Assert
+            Assert.Throws<ConfigurationException>(() => configurer.WithMockSetup(m => { }));
+        }
+
+        [Test]
+        public void GIVEN_SimpleConfigurer_WHEN_WithConfigSetupAfterObjectAccess_THEN_ConfigurationException()
+        {
+            //Arrange
+            IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
+            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            ITestObj obj = configurer.Object;
+
+            //Act / Assert
+            Assert.Throws<ConfigurationException>(() => configurer.WithConfigSetup(c => { }));
         }
     }
 

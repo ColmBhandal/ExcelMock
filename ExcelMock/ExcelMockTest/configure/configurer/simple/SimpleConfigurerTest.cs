@@ -20,7 +20,7 @@ namespace ExcelMockTest.configure.configurer.simple
         {
             //Arrange
             IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
-            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            ISimpleConfigurer<ITestObj> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
             Mock<IHandler> mockHandler = new();
             mockHandler.Setup(h => h.Handle()).Verifiable();
             void Setup(Mock<ITestObj> mock)
@@ -43,7 +43,7 @@ namespace ExcelMockTest.configure.configurer.simple
         {
             //Arrange
             IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
-            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            ISimpleConfigurer<ITestObj> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
             ITestObj obj = configurer.Object;
 
             //Act / Assert
@@ -55,7 +55,7 @@ namespace ExcelMockTest.configure.configurer.simple
         {
             //Arrange
             IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
-            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            ISimpleConfigurer<ITestObj> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
             ITestObj obj = configurer.Object;
 
             //Act / Assert

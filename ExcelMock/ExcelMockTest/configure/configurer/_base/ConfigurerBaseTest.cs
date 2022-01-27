@@ -18,7 +18,7 @@ namespace ExcelMockTest.configure.configurer._base
         {
             //Arrange
             OtherConfiguration configuration = new();
-            IConfigurer<ITestObj, OtherConfiguration> configurer = new OtherConfigurer(configuration);
+            OtherConfigurer configurer = new OtherConfigurer(configuration);
             Mock<IHandler> mockHandler = new();
             mockHandler.Setup(h => h.Handle()).Verifiable();
             void Setup(OtherConfiguration configuration)
@@ -47,11 +47,13 @@ namespace ExcelMockTest.configure.configurer._base
         void Handle();
     }
 
-    class OtherConfigurer : ConfigurerBase<ITestObj, OtherConfiguration>
+    class OtherConfigurer : ConfigurerBase<ITestObj, OtherConfiguration, OtherConfigurer>
     {
         public OtherConfigurer(OtherConfiguration configuration) : base(configuration)
         {
         }
+
+        protected override OtherConfigurer Self => this;
 
         protected override ITestObj CreateObject() =>
             _configuration.Other.Object;

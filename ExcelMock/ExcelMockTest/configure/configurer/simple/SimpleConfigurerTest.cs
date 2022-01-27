@@ -19,8 +19,8 @@ namespace ExcelMockTest.configure.configurer.simple
         {
             //Arrange
             IConfiguration<ITestObj> configuration = new ConfigurationImpl<ITestObj>();
-            IConfigurer<ITestObj> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
-            Mock<IHandler> mockHandler = new Mock<IHandler>();
+            IConfigurer<ITestObj, IConfiguration<ITestObj>> configurer = new SimpleConfigurerImpl<ITestObj>(configuration);
+            Mock<IHandler> mockHandler = new();
             mockHandler.Setup(h => h.Handle()).Verifiable();
             void Setup(Mock<ITestObj> mock)
             {

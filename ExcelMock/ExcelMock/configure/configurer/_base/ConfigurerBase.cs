@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ExcelMock.configure.configurer._base
 {
-    internal abstract class ConfigurerBase<TObj, TConfig> : IConfigurer<TObj>
+    internal abstract class ConfigurerBase<TObj, TConfig> : IConfigurer<TObj, TConfig>
         where TConfig : IConfiguration<TObj>
         where TObj : class
     {
-        protected readonly IConfiguration<TObj> _configuration;
+        protected readonly TConfig _configuration;
 
-        public ConfigurerBase(IConfiguration<TObj> configuration)
+        public ConfigurerBase(TConfig configuration)
         {
             _configuration = configuration;
         }
@@ -26,8 +26,12 @@ namespace ExcelMock.configure.configurer._base
 
         public void WithMockSetup(Action<Mock<TObj>> setup)
         {
-
+            //TODO
         }
 
+        public void WithConfigSetup(Action<TConfig> setup)
+        {
+            //TODO
+        }
     }
 }

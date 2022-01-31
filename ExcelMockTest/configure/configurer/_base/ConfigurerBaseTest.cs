@@ -56,7 +56,7 @@ namespace ExcelMockTest.configure.configurer._base
         protected override OtherConfigurer Self => this;
 
         protected override ITestObj CreateObject() =>
-            _configuration.Other.Object;
+            _configurationWrapper.Get(c => c.Other.Object);
     }
 
     class OtherConfiguration : IConfiguration<ITestObj>

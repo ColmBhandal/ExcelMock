@@ -22,7 +22,7 @@ namespace ExcelMock.configure.configurer.simple
 
         protected override TObj CreateObject()
         {
-            return _configuration.Mock.Object;
+            return _configurationWrapper.Get(c => c.Mock.Object);
         }
     }
 }

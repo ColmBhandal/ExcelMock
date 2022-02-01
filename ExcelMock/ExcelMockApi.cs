@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ExcelMock
 {
+    /// <summary>
+    /// Entry point for all types within the ExcelMock library.
+    /// </summary>
     public class ExcelMockApi : IExcelMockApi
     {
         private IConfigurerFactory? configurerFactory;

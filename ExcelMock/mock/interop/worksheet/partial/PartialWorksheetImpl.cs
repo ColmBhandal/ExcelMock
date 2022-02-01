@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelMock.mock.interop
+namespace ExcelMock.mock.interop.worksheet.partial
 {
-    internal class MockWorksheetImpl
+    internal class PartialWorksheetImpl
     {
     }
 }

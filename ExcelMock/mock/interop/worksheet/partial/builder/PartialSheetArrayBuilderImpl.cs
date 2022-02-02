@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ExcelMock.mock.interop.worksheet.partial.builder
 {
-    internal class PartialSheetArrayBuilderImpl : BaseClass
+    internal class PartialSheetArrayBuilderImpl : BaseClass, IPartialSheetArrayBuilder
     {
         public ISparseArray2D<ICellData> Build()
         {
@@ -19,5 +19,16 @@ namespace ExcelMock.mock.interop.worksheet.partial.builder
                 .Build();
         }
 
+        public IPartialSheetArrayBuilder WithValues(int row, int column, string[,] values)
+        {
+            //TODO
+            return this;
+        }
+
+        public IPartialSheetArrayBuilder WithFormulas(int row, int column, string[,] formulas)
+        {
+            //TODO
+            return this;
+        }
     }
 }

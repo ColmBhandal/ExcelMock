@@ -16,6 +16,152 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
     [TestFixture, Category("Unit")]
     public class PartialSheetArrayBuilderTest : TestBase
     {
+        [Test]
+        public void GIVEN_BuilderWithSubsequentWithFormulasOverlaps_WHEN_Build_THEN_LastFormulaWins()
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl()
+                .WithFormulas(1, 1, new string[,]
+                    {
+                        { "F0_00", "F0_01" },
+                        { "F0_01", "F0_11" }
+                    })
+                .WithFormulas(2, 2, new string[,]
+                    {
+                        { "F1_00", "F1_01" },
+                        { "F1_01", "F1_11" }
+                    });
+
+            //Act
+            ISparseArray2D<ICellData> data = builder.Build();
+
+            //Assert
+            string valueAtOverlap = data[2, 2].Formula;
+            Assert.AreEqual("F1_00", valueAtOverlap);
+        }
+
+        [Test]
+        public void GIVEN_BuilderWithSubsequentWithValuesOverlaps_WHEN_Build_THEN_LastValueWins()
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl()
+                .WithValues(1, 1, new string[,]
+                    {
+                        { "V0_00", "V0_01" },
+                        { "V0_01", "V0_11" }
+                    })
+                .WithValues(2, 2, new string[,]
+                    {
+                        { "V1_00", "V1_01" },
+                        { "V1_01", "V1_11" }
+                    });
+
+            //Act
+            ISparseArray2D<ICellData> data = builder.Build();
+
+            //Assert
+            string valueAtOverlap = data[2, 2].Value;
+            Assert.AreEqual("V1_00", valueAtOverlap);
+        }
+
+        [Test, TestCase(0, 2), TestCase(3, 0), TestCase(0, 0),
+            TestCase(-7, 2), TestCase(12, -1), TestCase(-4, -6)]
+        public void GIVEN_NonPositiveCoordinate_WHEN_AccessBuiltObject_THEN_IndexOutOfRangeException
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+            ISparseArray2D<ICellData> data = builder.Build();
+
+            //Act / Assert
+            Assert.Throws<IndexOutOfRangeException>(() => { var _ = data[row, col]; });
+        }
+
+        [Test, TestCase(0, 2), TestCase(3, -1)]
+        public void GIVEN_InvalidCoordinates_WHEN_WithValuesForEmptyArea_THEN_UsedCountIsZero
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+
+            //Act
+            builder.WithValues(row, col, new string[,] { });
+
+            //Assert
+            ISparseArray2D<ICellData> array = builder.Build();
+            Assert.AreEqual(0, (int)array.BackingArray.UsedValuesCount);
+        }
+
+        [Test, TestCase(-2, 2), TestCase(2, 0)]
+        public void GIVEN_InvalidCoordinates_WHEN_WithFormulasForEmptyArea_THEN_UsedCountIsZero
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+
+            //Act
+            builder.WithFormulas(row, col, new string[,] { });
+
+            //Assert
+            ISparseArray2D<ICellData> array = builder.Build();
+            Assert.AreEqual(0, (int) array.BackingArray.UsedValuesCount);
+        }
+
+        [Test, TestCase(0, 2), TestCase(3, -1)]
+        public void GIVEN_InvalidCoordinates_WHEN_WithValuesForNonEmptyArea_THEN_ArgumentException
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+
+            //Act / Assert
+            Assert.Throws<ArgumentException>(() =>
+                builder.WithValues(row, col, new string[,] { { "" } }));
+        }
+
+        [Test, TestCase(-2, 2), TestCase(2, 0)]
+        public void GIVEN_InvalidCoordinates_WHEN_WithFormulasForNonEmptyArea_THEN_ArgumentException
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+
+            //Act / Assert
+            Assert.Throws<ArgumentException>(() =>
+                builder.WithFormulas(row, col, new string[,] { { "" } }));
+        }
+
+        [Test]
+        public void GIVEN_BuilderWithNoValuesOrFormulas_WHEN_Build_THEN_UsedValuesEqualsEmptySparseArray()
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+            ISparseArray2D<ICellData> expected = CsharpExtrasApi.NewSparseArray2DBuilder<ICellData>
+                (EmptyCellDataImpl.Instance).Build();
+
+            //Act
+            ISparseArray2D<ICellData> actual = builder.Build();
+
+            //Assert
+            IComparisonResult comparison = expected.CompareUsedValues(actual, AreCellDatasEqual);
+            Assert.IsTrue(comparison.IsEqual, comparison.Message);
+        }
+
+        [Test, TestCase(1, 1), TestCase(1, 27), TestCase(13, 1), TestCase(12, 9)]
+        public void GIVEN_BuilderWithNoValuesOrFormulas_WHEN_Build_THEN_EmptyCellDataAtValidCoordinates
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+
+            //Act
+            ISparseArray2D<ICellData> array = builder.Build();
+
+            //Assert
+            ICellData data = array[row, col];;
+            Assert.IsTrue(EmptyCellDataImpl.Instance.IsEqual(data), "Expected cell data to equal empty cell data");
+        }
+
         [Test, TestCaseSource(nameof(ProviderFor2DArrayFormulasValuesResultExpected))]
         public void GIVEN_2DArraySOfFormulasAndValues_WHEN_Build_THEN_ResultIsAsExpected
             ((int valueRow, int valueColumn, int formulaRow, int formulaColumn, 
@@ -31,7 +177,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
 
             //Assert
             IComparisonResult comparison = testData.expectedData
-                .CompareUsedValues(array, (d1, d2) => d1.IsEqual(d2));
+                .CompareUsedValues(array, AreCellDatasEqual);
             Assert.IsTrue(comparison.IsEqual, comparison.Message);
         }
 
@@ -89,6 +235,11 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
                         .Build()
                 ),
             };
+        }
+
+        private static bool AreCellDatasEqual(ICellData d1, ICellData d2)
+        {
+            return d1.IsEqual(d2);
         }
     }
 }

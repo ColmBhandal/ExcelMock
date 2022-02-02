@@ -16,5 +16,10 @@ namespace ExcelMock.mock.interop.worksheet.partial.data
             return (Formula == other.Formula
                 && Value == other.Value);
         }
+
+        public override string? ToString()
+        {
+            return $"(v: {Value}, f: {Formula})";
+        }
     }
 }

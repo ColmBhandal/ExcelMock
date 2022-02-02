@@ -65,7 +65,29 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
                         .WithValue(new MutableCellDataImpl("", "F_10"), 4, 3)
                         .WithValue(new MutableCellDataImpl("", "F_11"), 4, 4)
                         .Build()
-                )
+                ),
+                (
+                    1, 1, 2, 2,
+                    new string[,]
+                    {
+                        { "V_00", "V_01" },
+                        { "V_01", "V_11" }
+                    },
+                    new string[,]
+                    {
+                        { "F_00", "F_01" },
+                        { "F_01", "F_11" }
+                    },
+                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(EmptyCellDataImpl.Instance)
+                        .WithValue(new MutableCellDataImpl("V_00", ""), 1, 1)
+                        .WithValue(new MutableCellDataImpl("V_01", ""), 1, 2)
+                        .WithValue(new MutableCellDataImpl("V_10", ""), 2, 1)
+                        .WithValue(new MutableCellDataImpl("V_11", "F_00"), 2, 2)
+                        .WithValue(new MutableCellDataImpl("", "F_01"), 2, 3)
+                        .WithValue(new MutableCellDataImpl("", "F_10"), 3, 2)
+                        .WithValue(new MutableCellDataImpl("", "F_11"), 3, 3)
+                        .Build()
+                ),
             };
         }
     }

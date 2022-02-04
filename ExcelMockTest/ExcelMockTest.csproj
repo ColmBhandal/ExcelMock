@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsharpExtras" Version="2.0.0-alpha.6" />
+    <PackageReference Include="CsharpExtras" Version="2.0.0-alpha.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1000" />
     <PackageReference Include="Moq" Version="4.16.1" />

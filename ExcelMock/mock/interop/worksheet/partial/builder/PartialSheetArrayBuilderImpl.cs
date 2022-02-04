@@ -25,10 +25,11 @@ namespace ExcelMock.mock.interop.worksheet.partial.builder
 
         public ISparseArray2D<ICellData> Build()
         {
-            //TODO: Implement via zip function on sparse arrays
-            return CsharpExtrasApi.NewSparseArray2DBuilder<ICellData>(
-                new MutableCellDataImpl("TODO: Implement", "TODO: Implement"))
-                .Build();
+            ICellData defaultVal = new MutableCellDataImpl("", "");
+            ISparseArray2D<ICellData> resultantArray = FormulasArray.Zip
+                ((f, v) => new MutableCellDataImpl(f, v),
+                ValuesArray, defaultVal, (k, i) => i > 0);
+            return resultantArray;
         }
 
         public IPartialSheetArrayBuilder WithValues(int row, int column, string[,] values)

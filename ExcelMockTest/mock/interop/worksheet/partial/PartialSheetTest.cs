@@ -58,7 +58,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
         }
 
         [Test]
-        public void GIVEN_DistinctEmptySheetData_WHEN_ConstructPartialSheets_THEN_DeepEqual()
+        public void GIVEN_DistinctEmptySheetData_WHEN_ConstructPartialSheets_THEN_UsedDataEqual()
         {
             //Arrange
             ISparseArray2D<ICellData> data1 = new PartialSheetArrayBuilderImpl().Build();
@@ -74,7 +74,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
         }
 
         [Test]
-        public void GIVEN_DistinctButEqualSheetData_WHEN_ConstructPartialSheets_THEN_DeepEqual()
+        public void GIVEN_DistinctButEqualSheetData_WHEN_ConstructPartialSheets_THEN_UsedDataEqual()
         {
             //Arrange
             IPartialSheetArrayBuilder makeBuilder() => new PartialSheetArrayBuilderImpl()

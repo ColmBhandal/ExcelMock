@@ -15,6 +15,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
     [TestFixture, Category("Unit")]
     public class PartialSheetTest
     {
+
         [Test, TestCaseSource(nameof(ProviderForDifferingSheetDataConstructionTest))]
         public void GIVEN_DifferingSheetData_WHEN_ConstructPartialSheets_THEN_UsedDataNotEqual(
             Func<IPartialSheetArrayBuilder, IPartialSheetArrayBuilder> differingBuildSteps)

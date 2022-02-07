@@ -1,4 +1,5 @@
-﻿using CsharpExtras.Map.Sparse.TwoDimensional;
+﻿using CsharpExtras.Compare;
+using CsharpExtras.Map.Sparse.TwoDimensional;
 using ExcelMock.mock.interop.range.partial;
 using ExcelMock.mock.interop.worksheet.partial.data;
 using System;
@@ -11,11 +12,16 @@ namespace ExcelMock.mock.interop.worksheet.partial
 {
     internal class PartialSheetImpl : IPartialSheet
     {
-        private ISparseArray2D<ICellData> _backingData;
+        public ISparseArray2D<ICellData> BackingData { get; }
 
         public PartialSheetImpl(ISparseArray2D<ICellData> data)
         {
-            _backingData = data;
+            BackingData = data;
+        }
+
+        public IComparisonResult CompareUsedData(IPartialSheet other)
+        {
+            return BackingData.CompareUsedValues(other.BackingData, (c1, c2) => c1.IsEqual(c2));
         }
 
         public IPartialSheetArea Range(int startRow, int startCol, int endRow, int endCol)

@@ -1,8 +1,8 @@
-﻿using CsharpExtras.Map.Sparse.TwoDimensional;
+﻿using CsharpExtras.Compare;
+using CsharpExtras.Map.Sparse.TwoDimensional;
 using ExcelMock.mock.interop.worksheet.partial;
 using ExcelMock.mock.interop.worksheet.partial.builder;
 using ExcelMock.mock.interop.worksheet.partial.data;
-using JsonEquals.assert;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
     public class PartialSheetTest
     {
         [Test, TestCaseSource(nameof(ProviderForDifferingSheetDataConstructionTest))]
-        public void GIVEN_DifferingSheetData_WHEN_ConstructPartialSheets_THEN_NotDeepEqual(
+        public void GIVEN_DifferingSheetData_WHEN_ConstructPartialSheets_THEN_UsedDataNotEqual(
             Func<IPartialSheetArrayBuilder, IPartialSheetArrayBuilder> differingBuildSteps)
         {
             //Arrange
@@ -41,7 +41,8 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            JsonAssert.AreNotJsonEqual(sheet1, sheet2, "Sheets should not be equal");
+            IComparisonResult comparison = sheet1.CompareUsedData(sheet2);
+            Assert.IsFalse(comparison.IsEqual, comparison.Message);
         }
 
         private static IEnumerable<Func<IPartialSheetArrayBuilder, IPartialSheetArrayBuilder>>
@@ -68,7 +69,8 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            JsonAssert.AreJsonEqual(sheet1, sheet2);
+            IComparisonResult comparison = sheet1.CompareUsedData(sheet2);
+            Assert.IsTrue(comparison.IsEqual, comparison.Message);
         }
 
         [Test]
@@ -96,7 +98,8 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            JsonAssert.AreJsonEqual(sheet1, sheet2);
+            IComparisonResult comparison = sheet1.CompareUsedData(sheet2);
+            Assert.IsTrue(comparison.IsEqual, comparison.Message);
         }
     }
 }

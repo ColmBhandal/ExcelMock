@@ -2,7 +2,7 @@
 using ExcelMock.mock.interop.worksheet.partial;
 using ExcelMock.mock.interop.worksheet.partial.builder;
 using ExcelMock.mock.interop.worksheet.partial.data;
-using ExcelMockTest.util;
+using JsonEquals.assert;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            Assert.IsFalse(sheet1.JsonEquals(sheet2), "Sheets should not be equal");
+            JsonAssert.AreNotJsonEqual(sheet1, sheet2, "Sheets should not be equal");
         }
 
         private static IEnumerable<Func<IPartialSheetArrayBuilder, IPartialSheetArrayBuilder>>
@@ -68,7 +68,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            Assert.IsTrue(sheet1.JsonEquals(sheet2));
+            JsonAssert.AreJsonEqual(sheet1, sheet2);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial
             IPartialSheet sheet2 = new PartialSheetImpl(data2);
 
             //Assert
-            Assert.IsTrue(sheet1.JsonEquals(sheet2));
+            JsonAssert.AreJsonEqual(sheet1, sheet2);
         }
     }
 }

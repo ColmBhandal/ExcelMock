@@ -16,6 +16,25 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
     [TestFixture, Category("Unit")]
     public class PartialSheetArrayBuilderTest : TestBase
     {
+        //Note: It's important that empty cells are assigned immutable data
+        //Sparse arrays map all unused values to the same default
+        //So if we used mutable data as the default, then writing to one value would result in all others being updated
+        //Using the immutable instance prevents this & will throw an exception if anyone tried to write to it
+        [Test, TestCase(1, 1), TestCase(36, 104)]
+        public void GIVEN_BuiltData_WHEN_GetDefault_THEN_EmptyImmutableCellDataReturned
+            (int row, int col)
+        {
+            //Arrange
+            IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
+            ISparseArray2D<ICellData> array = builder.Build();
+
+            //Act
+            ICellData arbitraryData = array[row, col];
+
+            //Assert
+            Assert.AreSame(EmptyCellDataImpl.Instance, arbitraryData);
+        }
+
         [Test]
         public void GIVEN_BuilderWithSubsequentWithFormulasOverlaps_WHEN_Build_THEN_LastFormulaWins()
         {

@@ -25,10 +25,10 @@ namespace ExcelMock.mock.interop.worksheet.partial.builder
 
         public ISparseArray2D<ICellData> Build()
         {
-            ICellData defaultVal = new MutableCellDataImpl("", "");
+            ICellData defaultEmptyData = EmptyCellDataImpl.Instance;
             ISparseArray2D<ICellData> resultantArray = FormulasArray.Zip
                 ((f, v) => new MutableCellDataImpl(f, v),
-                ValuesArray, defaultVal, (k, i) => i > 0);
+                ValuesArray, defaultEmptyData, (k, i) => i > 0);
             return resultantArray;
         }
 

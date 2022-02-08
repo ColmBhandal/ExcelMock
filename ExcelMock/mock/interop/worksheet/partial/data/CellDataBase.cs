@@ -10,6 +10,7 @@ namespace ExcelMock.mock.interop.worksheet.partial.data
     {
         public abstract string Formula { get; set; }
         public abstract string Value { get; set; }
+        public abstract bool IsMutable { get; }
 
         public bool IsEqual(ICellData other)
         {

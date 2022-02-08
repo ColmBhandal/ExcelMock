@@ -1,7 +1,10 @@
-﻿namespace ExcelMock.mock.interop.range.partial
+﻿using CsharpExtras._Enumerable.OneBased;
+
+namespace ExcelMock.mock.interop.range.partial
 {
     internal interface IPartialSheetArea
     {
-        string AddressLocal { get; }
+        IOneBasedArray2D<string> Formulas { get; set; }
+        IOneBasedArray2D<string> Values { get; set; }
     }
 }

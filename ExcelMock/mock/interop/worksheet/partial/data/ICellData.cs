@@ -21,5 +21,10 @@
         /// <param name="other">The other cell against which to compare</param>
         /// <returns>True iff all the data in this cell matches the other one</returns>
         bool IsEqual(ICellData other);
+
+        /// <summary>
+        /// True iff this cell data object is mutable i.e. if its properties are writable
+        /// </summary>
+        bool IsMutable { get; }
     }
 }

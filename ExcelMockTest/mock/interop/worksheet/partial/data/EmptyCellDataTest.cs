@@ -16,7 +16,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.data
             ((Action<ICellData> setAction, string actionDescription) testData)
         {
             //Assemble
-            ICellData cellData = EmptyCellDataImpl.Instance;
+            ICellData cellData = ImmutableEmptyCellDataImpl.Instance;
 
             //Act / Assert
             Assert.Throws<InvalidOperationException>(() => testData.setAction(cellData),
@@ -38,7 +38,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.data
             ((Func<ICellData, string> getFunction, string getFunctionDescription) testData)
         {
             //Assemble
-            ICellData cellData = EmptyCellDataImpl.Instance;
+            ICellData cellData = ImmutableEmptyCellDataImpl.Instance;
 
             //Act
             string actual = testData.getFunction(cellData);
@@ -62,8 +62,8 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.data
         public void GIVEN_EmptyCellDataClass_WHEN_GetInstanceTwice_THEN_SameInstanceReturned()
         {
             //Assemble / Act
-            ICellData cellData1 = EmptyCellDataImpl.Instance;
-            ICellData cellData2 = EmptyCellDataImpl.Instance;
+            ICellData cellData1 = ImmutableEmptyCellDataImpl.Instance;
+            ICellData cellData2 = ImmutableEmptyCellDataImpl.Instance;
 
             //Assert
             Assert.AreSame(cellData1, cellData2, "Instance property should always return the same instance");
@@ -74,7 +74,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.data
         public void GIVEN_EmptyCellInstances_WHEN_IsEqual_THEN_True()
         {
             //Assemble
-            ICellData cellData = EmptyCellDataImpl.Instance;
+            ICellData cellData = ImmutableEmptyCellDataImpl.Instance;
 
             //Act
             bool isEqual = cellData.IsEqual(cellData);

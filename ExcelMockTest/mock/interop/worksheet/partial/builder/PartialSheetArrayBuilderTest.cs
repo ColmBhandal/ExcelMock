@@ -32,7 +32,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
             ICellData arbitraryData = array[row, col];
 
             //Assert
-            Assert.AreSame(EmptyCellDataImpl.Instance, arbitraryData);
+            Assert.AreSame(ImmutableEmptyCellDataImpl.Instance, arbitraryData);
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
             //Arrange
             IPartialSheetArrayBuilder builder = new PartialSheetArrayBuilderImpl();
             ISparseArray2D<ICellData> expected = CsharpExtrasApi.NewSparseArray2DBuilder<ICellData>
-                (EmptyCellDataImpl.Instance).Build();
+                (ImmutableEmptyCellDataImpl.Instance).Build();
 
             //Act
             ISparseArray2D<ICellData> actual = builder.Build();
@@ -178,7 +178,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
 
             //Assert
             ICellData data = array[row, col];;
-            Assert.IsTrue(EmptyCellDataImpl.Instance.IsEqual(data), "Expected cell data to equal empty cell data");
+            Assert.IsTrue(ImmutableEmptyCellDataImpl.Instance.IsEqual(data), "Expected cell data to equal empty cell data");
         }
 
         [Test, TestCaseSource(nameof(ProviderFor2DArrayFormulasValuesResultExpected))]
@@ -220,7 +220,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
                         { "F_00", "F_01" },
                         { "F_10", "F_11" }
                     },
-                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(EmptyCellDataImpl.Instance)
+                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(ImmutableEmptyCellDataImpl.Instance)
                         .WithValue(new MutableCellDataImpl("", "V_00"), 1, 1)
                         .WithValue(new MutableCellDataImpl("", "V_01"), 1, 2)
                         .WithValue(new MutableCellDataImpl("", "V_10"), 2, 1)
@@ -243,7 +243,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
                         { "F_00", "F_01" },
                         { "F_10", "F_11" }
                     },
-                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(EmptyCellDataImpl.Instance)
+                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(ImmutableEmptyCellDataImpl.Instance)
                         .WithValue(new MutableCellDataImpl("", "V_00"), 1, 1)
                         .WithValue(new MutableCellDataImpl("", "V_01"), 1, 2)
                         .WithValue(new MutableCellDataImpl("", "V_10"), 2, 1)
@@ -265,7 +265,7 @@ namespace ExcelMockTest.mock.interop.worksheet.partial.builder
                         { "F_00", "" },
                         { "F_10", "" }
                     },
-                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(EmptyCellDataImpl.Instance)
+                    csharpExtrasApi.NewSparseArray2DBuilder<ICellData>(ImmutableEmptyCellDataImpl.Instance)
                         .WithValue(new MutableCellDataImpl("", "V_01"), 1, 2)
                         .WithValue(new MutableCellDataImpl("F_00", "V_11"), 2, 2)
                         .WithValue(new MutableCellDataImpl("F_10", ""), 3, 2)

@@ -12,10 +12,17 @@ namespace ExcelMock.mock.interop.worksheet.partial.data
 
         public override string Value { get; set; }
 
+        public override bool IsMutable => true;
+
         public MutableCellDataImpl(string formula, string value)
         {
             Formula = formula ?? throw new ArgumentNullException(nameof(formula));
             Value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        internal static ICellData Copy(ICellData data)
+        {
+            return new MutableCellDataImpl(data.Formula, data.Value);
         }
     }
 }

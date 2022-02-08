@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ExcelMock.mock.interop.worksheet.partial.data
 {
-    internal class EmptyCellDataImpl : CellDataBase
+    internal class ImmutableEmptyCellDataImpl : CellDataBase
     {
-        public static EmptyCellDataImpl Instance = new EmptyCellDataImpl();
+        public static ImmutableEmptyCellDataImpl Instance = new ImmutableEmptyCellDataImpl();
         
-        private EmptyCellDataImpl()
+        private ImmutableEmptyCellDataImpl()
         {
 
         }
@@ -25,5 +25,7 @@ namespace ExcelMock.mock.interop.worksheet.partial.data
             get => "";
             set => throw new InvalidOperationException("Cannot set data on immutable cell data");
         }
+
+        public override bool IsMutable => false;
     }
 }

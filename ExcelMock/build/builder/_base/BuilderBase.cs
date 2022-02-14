@@ -27,7 +27,7 @@ namespace ExcelMock.build.builder._base
             Mock<TObj> mock = new Mock<TObj>();
             foreach (Action<Mock<TObj>> action in _setupActions)
             {
-                action(mock);
+                //action(mock);
             }
             return mock.Object;
         }

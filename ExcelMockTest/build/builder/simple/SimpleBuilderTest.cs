@@ -35,6 +35,20 @@ namespace ExcelMockTest.build.builder.simple
             obj.Foo();
             mockHandler.Verify(h => h.Handle(), Times.Once());
         }
+
+        [Test]
+        public void GIVEN_SimpleBuilder_WHEN_BuildTwice_THEN_NotSameObjects()
+        {
+            //Arrange
+            ISimpleBuilder<ITestObj> builder = new SimpleBuilderImpl<ITestObj>();
+
+            //Act
+            ITestObj object1 = builder.Build();
+            ITestObj object2 = builder.Build();
+
+            //Assert
+            Assert.AreNotSame(object1, object2, "Successive calls to builder should build distinct objects");
+        }
     }
 
     interface ITestObj

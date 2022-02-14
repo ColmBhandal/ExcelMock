@@ -15,18 +15,26 @@ namespace ExcelMock.build.builder._base
         where TObj : class
     {
 
+        private readonly IList<Action<Mock<TObj>>> _setupActions =
+            new List<Action<Mock<TObj>>>();
+
         public BuilderBase()
         {
         }
 
         public TObj Build()
         {
-            //TODO: Implement properly
-            return new Mock<TObj>().Object;
+            Mock<TObj> mock = new Mock<TObj>();
+            foreach (Action<Mock<TObj>> action in _setupActions)
+            {
+                action(mock);
+            }
+            return mock.Object;
         }
 
         public TSelf WithMockSetup(Action<Mock<TObj>> setup)
         {
+            _setupActions.Add(setup);
             return Self;
         }
         protected abstract TSelf Self { get; }

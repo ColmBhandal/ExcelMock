@@ -11,7 +11,6 @@ namespace ExcelMock.build.builder.simple
         : BuilderBase<TObj, ISimpleBuilder<TObj>>, ISimpleBuilder<TObj>
         where TObj : class
     {
-
-        protected override SimpleBuilderImpl<TObj> Self => this;
+        protected override ISimpleBuilder<TObj> Self => this;
     }
 }

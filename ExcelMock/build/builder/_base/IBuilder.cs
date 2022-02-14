@@ -18,9 +18,9 @@ namespace ExcelMock.build.builder._base
         TObj Build();
 
         /// <summary>
-        /// Runs the given action on the mock that's being used for building the object.
+        /// Buffers the setup action for the object to be built
         /// </summary>
-        /// <param name="setup">The action to run on the mock.</param>
+        /// <param name="setup">The setup action to run on the mock.</param>
         /// <returns>An instance of the builder class- useful for method chaining.</returns>
         TSelf WithMockSetup(Action<Mock<TObj>> setup);
     }

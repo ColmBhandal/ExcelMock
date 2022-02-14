@@ -8,9 +8,9 @@ namespace ExcelMock
     public interface IExcelMockApi
     {
         /// <summary>
-        /// The configurer factory allows for the creation of new configurers.
-        /// See <see cref="IConfigurerFactory"/>
+        /// The builder factory allows for the creation of new builders.
+        /// See <see cref="IBuilderFactory"/>
         /// </summary>
-        IConfigurerFactory ConfigurerFactory { get; }
+        IBuilderFactory BuilderFactory { get; }
     }
 }

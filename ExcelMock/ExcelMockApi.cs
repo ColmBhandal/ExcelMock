@@ -12,13 +12,13 @@ namespace ExcelMock
     /// </summary>
     public class ExcelMockApi : IExcelMockApi
     {
-        private IConfigurerFactory? configurerFactory;
+        private IBuilderFactory? builderFactory;
 
         /// <summary>
-        /// The configurer factory allows for the creation of new configurers.
-        /// See <see cref="IConfigurerFactory"/>
+        /// The builder factory allows for the creation of new builders.
+        /// See <see cref="IBuilderFactory"/>
         /// </summary>
-        public IConfigurerFactory ConfigurerFactory =>
-            configurerFactory ??= new ConfigurerFactoryImpl();
+        public IBuilderFactory BuilderFactory =>
+            builderFactory ??= new BuilderFactoryImpl();
     }
 }

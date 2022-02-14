@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelMock.configure.exception
+namespace ExcelMock.build.exception
 {
     /// <summary>
     /// Thrown when an exception occurs while trying to configure a mock object.
